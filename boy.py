@@ -1,5 +1,5 @@
 from pico2d import load_image, get_time
-from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT
+from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT, SDLK_a
 
 from state_machine import StateMachine
 
@@ -17,6 +17,8 @@ def left_down(eve):
     return eve[0] =='INPUT' and eve[1].type == SDL_KEYDOWN and eve[1].key == SDLK_LEFT
 def left_up(eve):
     return eve[0] =='INPUT' and eve[1].type == SDL_KEYUP and eve[1].key == SDLK_LEFT
+def a_down(eve):
+    return eve[0] == 'INPUT' and eve[1].type == SDL_KEYDOWN and eve[1].key == SDLK_a
 
 class AutoRun:
 
@@ -132,9 +134,9 @@ class Boy:
             self.IDLE,
             {
                 self.SLEEP : {space_down : self.IDLE},
-                self.IDLE : {time_out : self.SLEEP, right_down : self.RUN, left_down : self.RUN,left_up : self.RUN, right_up : self.RUN},
+                self.IDLE : {time_out : self.SLEEP, right_down : self.RUN, left_down : self.RUN,left_up : self.RUN, right_up : self.RUN, a_down:self.AUTO},
                 self.RUN : {right_up : self.IDLE, left_up : self.IDLE, right_down : self.IDLE, left_down : self.IDLE},
-                self.AUTO : {right_down : self.RUN, left_down:self.RUN}
+                self.AUTO : {right_down : self.RUN, left_down:self.RUN, time_out:self.IDLE}
             }
         )
 
