@@ -37,9 +37,9 @@ class AutoRun:
 
     def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
-        self.boy.speed += 0.5
-        self.boy.size += 5
-        self.boy.y += 1.7
+        self.boy.speed += 0.3
+        self.boy.size += 3
+        self.boy.y += 1
         if self.boy.x > 760:
             self.boy.dir = -1
             self.boy.face_dir = -1
