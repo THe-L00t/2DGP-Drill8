@@ -26,21 +26,32 @@ class AutoRun:
         self.boy = boy
 
     def enter(self,eve):
-
-        pass
+        self.boy.dir = 1
+        self.boy.face_dir = 1
+        self.boy.speed = 5
+        self.boy.size = 100
 
     def exit(self,eve):
         pass
 
     def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
-        self.boy.x += self.boy.dir * 5
+        self.boy.speed += 0.5
+        self.boy.size += 5
+        self.boy.y += 2.5
+        if self.boy.x > 760:
+            self.boy.dir = -1
+            self.boy.face_dir = -1
+        elif self.boy.x < 40:
+            self.boy.dir = 1
+            self.boy.face_dir = 1
+        self.boy.x += self.boy.dir * self.boy.speed
 
     def draw(self):
         if self.boy.face_dir == 1: # right
-            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y,100,100)
+            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y,self.boy.size,self.boy.size)
         else: # face_dir == -1: # left
-            self.boy.image.clip_draw(self.boy.frame * 100, 000, 100, 100, self.boy.x, self.boy.y,100,100)
+            self.boy.image.clip_draw(self.boy.frame * 100, 000, 100, 100, self.boy.x, self.boy.y,self.boy.size,self.boy.size)
 
 class Run:
 
