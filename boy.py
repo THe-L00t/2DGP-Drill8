@@ -30,6 +30,7 @@ class AutoRun:
         self.boy.face_dir = 1
         self.boy.speed = 5
         self.boy.size = 100
+        self.boy.auto_start_time = get_time()
 
     def exit(self,eve):
         pass
@@ -38,7 +39,7 @@ class AutoRun:
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.speed += 0.5
         self.boy.size += 5
-        self.boy.y += 2.5
+        self.boy.y += 1.7
         if self.boy.x > 760:
             self.boy.dir = -1
             self.boy.face_dir = -1
@@ -46,6 +47,8 @@ class AutoRun:
             self.boy.dir = 1
             self.boy.face_dir = 1
         self.boy.x += self.boy.dir * self.boy.speed
+        if get_time() - self.boy.auto_start_time > 5.0:
+            self.boy.state_machine.handle_state_event(('TIME_OUT',Idle))
 
     def draw(self):
         if self.boy.face_dir == 1: # right
@@ -58,7 +61,9 @@ class Run:
     def __init__(self, boy):
         self.boy = boy
 
+
     def enter(self,eve):
+        self.boy.y = 90
         if left_down(eve):
             self.boy.dir = -1
             self.boy.face_dir = -1
@@ -90,6 +95,7 @@ class Sleep:
     def __init__(self, boy):
         self.boy = boy
 
+
     def enter(self,eve):
         self.boy.dir = 0
 
@@ -111,6 +117,7 @@ class Idle:
         self.boy = boy
 
     def enter(self,eve):
+        self.boy.y = 90
         self.boy.dir = 0
         self.boy.wait_start_time = get_time()
 
